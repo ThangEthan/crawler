@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  crawler:
+    build: .
+    image: crawler
+    container_name: crawler
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    network_mode: service:nordvpn
+    depends_on:
+      - nordvpn
+  
+  nordvpn:
+    image: ghcr.io/bubuntux/nordvpn:master
+    container_name: nordvpn
+    cap_add:
+      - NET_ADMIN               # Required
+    environment:                # Review https://github.com/bubuntux/nordvpn#environment-variables
+      - USER=aram@universityhousing.nl
+      - "PASS=UHvpnvpn1!"         # Required
+      - CONNECT=nl
+      - TECHNOLOGY=NordLynx
+      - NETWORK=192.168.178.0/24  # So it can be accessed within the local network
+    ports:
+      - 8080:8080

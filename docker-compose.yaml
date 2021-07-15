@@ -7,7 +7,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /usr/bin/docker:/usr/bin/docker
-    network_mode: service:nordvpn
+    #network_mode: service:nordvpn
     depends_on:
       - nordvpn
       - mysql
@@ -28,10 +28,11 @@ services:
 
   mysql:
     image: mysql
+    command: --default-authentication-plugin=mysql_native_password
     environment:
-      - MYSQL_USER=thang 
-      - MYSQL_PASSWORD=thang1998 
+      - MYSQL_ROOT_PASSWORD=thang1998 
       - MYSQL_DATABASE=scraping_data
+      - MYSQL_USER=thang
+      - MYSQL_PASSWORD=thang1998
     expose: 
       - "3306"
-    

@@ -1,0 +1,8 @@
+FROM mysql
+
+ENV MYSQL_USER=thang \
+    MYSQL_PASSWORD=thang1998 \
+    MYSQL_DATABASE=scraping_data
+
+EXPOSE 3306
+CMD 

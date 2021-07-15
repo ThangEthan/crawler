@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   crawler:
-    build: .
+    build: crawler
     image: crawler
     container_name: crawler
     volumes:
@@ -10,6 +10,7 @@ services:
     network_mode: service:nordvpn
     depends_on:
       - nordvpn
+      - mysql
   
   nordvpn:
     image: ghcr.io/bubuntux/nordvpn:master
@@ -24,3 +25,13 @@ services:
       - NETWORK=192.168.178.0/24  # So it can be accessed within the local network
     ports:
       - 8080:8080
+
+  mysql:
+    image: mysql
+    environment:
+      - MYSQL_USER=thang 
+      - MYSQL_PASSWORD=thang1998 
+      - MYSQL_DATABASE=scraping_data
+    expose: 
+      - "3306"
+    
